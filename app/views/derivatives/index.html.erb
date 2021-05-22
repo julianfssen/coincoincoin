@@ -1,0 +1,32 @@
+<%= stylesheet_link_tag 'derivatives/index' %>
+
+<%= turbo_frame_tag 'derivatives', src: derivatives_path do %>
+  <form action='/derivatives' method='GET'>
+    <label for='sort'>
+      Sort by:
+    </label>
+    <select name='sort' onchange='this.form.submit()'>
+      <option value='volume_desc'>Volume (high to low)</option>
+      <option value='volume_asc'>Volume (low to high)</option>
+    </select>
+  </form>
+
+  <div>
+    <% @derivatives.each_with_index do |derivative, index| %>
+      <div class='single-derivative-container'>
+        <div class='rank-container'>
+          <p><%= index + 1 %></p>
+        </div>
+        <div class='symbol-container'>
+          <p><%= derivative.symbol %></p>
+        </div>
+        <div class='price-container'>
+          <p><%= derivative.price %></p>
+        </div>
+        <div class='price-percentage-change-container'>
+          <p><%= derivative.price_percentage_change_24h %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

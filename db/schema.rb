@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_20_012805) do
+ActiveRecord::Schema.define(version: 2021_05_22_104929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(version: 2021_05_20_012805) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "derivative_daily_historical_prices", force: :cascade do |t|
+    t.integer "derivative_id"
+    t.integer "derivative_exchange_id"
+    t.decimal "price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "derivative_exchanges", force: :cascade do |t|
     t.string "name"
     t.string "image_url"
@@ -30,19 +38,28 @@ ActiveRecord::Schema.define(version: 2021_05_20_012805) do
     t.decimal "trade_volume_24h"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "coingecko_exchange_id"
   end
 
   create_table "derivatives", force: :cascade do |t|
-    t.string "market"
     t.string "symbol"
     t.string "index_id"
     t.decimal "price"
     t.decimal "price_percentage_change_24h"
     t.string "contract_type"
-    t.string "volume_24h"
-    t.string "decimal"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "market_id"
+    t.string "base"
+    t.string "target"
+    t.string "url"
+    t.integer "last_updated"
+    t.boolean "expired"
+    t.decimal "funding_rate"
+    t.decimal "bid_ask_spread"
+    t.decimal "open_interest"
+    t.decimal "volume_24h"
+    t.integer "expiring_at"
   end
 
 end

@@ -1,0 +1,2 @@
+class DerivativeDailyHistoricalPrice < ApplicationRecord
+end

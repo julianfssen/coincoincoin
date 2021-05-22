@@ -1,0 +1,26 @@
+// Place all the styles related to the Derivatives controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.single-derivative-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.rank-container {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+}
+
+.symbol-container {
+	flex: 2;
+}
+
+.price-container {
+	flex: 1;
+}
+
+.price-percentage-change-container {
+	flex: 1;
+}
