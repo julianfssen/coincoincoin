@@ -29,6 +29,7 @@ gem 'redis', '~> 4.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'chartkick'
 gem 'coingecko_ruby'
+gem 'stimulus-rails'
 gem 'turbo-rails'
 
 group :development, :test do

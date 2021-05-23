@@ -1,32 +1,60 @@
 <%= stylesheet_link_tag 'derivatives/index' %>
 
-<%= turbo_frame_tag 'derivatives', src: derivatives_path do %>
-  <form action='/derivatives' method='GET'>
-    <label for='sort'>
-      Sort by:
-    </label>
-    <select name='sort' onchange='this.form.submit()'>
-      <option value='volume_desc'>Volume (high to low)</option>
-      <option value='volume_asc'>Volume (low to high)</option>
-    </select>
-  </form>
+<label for='markets'>
+  Market
+</label>
 
-  <div>
+<%= collection_select :derivative_exchange, :id, @derivative_exchanges, :id, :name, {}, { data: { controller: 'derivatives', action: 'derivatives#change', 'derivatives-target': 'derivativeExchange' } } %>
+
+<label for='contract-types'>
+  Contract Type
+</label>
+
+<select name='contract-types'>
+  <option value="any">Any</option>
+  <option value="futures">Futures</option>
+  <option value="perpetual">Perpetual</option>
+</select>
+
+<%= turbo_frame_tag 'derivatives', src: derivatives_path do %>
+  <table>
+    <tr>
+      <% if @sort.eql? 'volume_asc' %>
+        <th><a href='?sort=volume_desc'># ▴</a></th>
+      <% else %>
+        <th><a href='?sort=volume_asc'># ▾</a></th>
+      <% end %>
+      <% if @sort.eql? 'ticker_asc' %>
+        <th><a href='?sort=ticker_desc'>Ticker ▴</a></th>
+      <% else %>
+        <th><a href='?sort=ticker_asc'>Ticker ▾</a></th>
+      <% end %>
+      <% if @sort.eql? 'price_asc' %>
+        <th><a href='?sort=price_desc'>Price ▴</a></th>
+      <% else %>
+        <th><a href='?sort=price_asc'>Price ▾</a></th>
+      <% end %>
+      <% if @sort.eql? 'price_percentage_change_24h_asc' %>
+        <th><a href='?sort=price_percentage_change_24h_desc'>24h % ▴</a></th>
+      <% else %>
+        <th><a href='?sort=price_percentage_change_24h_asc'>24h % ▾</a></th>
+      <% end %>
+    </tr>
     <% @derivatives.each_with_index do |derivative, index| %>
-      <div class='single-derivative-container'>
-        <div class='rank-container'>
-          <p><%= index + 1 %></p>
-        </div>
-        <div class='symbol-container'>
-          <p><%= derivative.symbol %></p>
-        </div>
-        <div class='price-container'>
-          <p><%= derivative.price %></p>
-        </div>
-        <div class='price-percentage-change-container'>
-          <p><%= derivative.price_percentage_change_24h %></p>
-        </div>
-      </div>
+      <tr>
+        <td class='rank-container'>
+          <%= index + 1 %>
+        </td>
+        <td class='symbol-container'>
+          <%= derivative.symbol %>
+        </td>
+        <td class='price-container'>
+          <%= derivative.price %>
+        </td>
+        <td class='price-percentage-change-container'>
+          <%= derivative.price_percentage_change_24h %>
+        </td>
+      </tr>
     <% end %>
-  </div>
+  </table>
 <% end %>
