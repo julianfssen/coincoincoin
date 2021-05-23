@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_23_045235) do
+ActiveRecord::Schema.define(version: 2021_05_23_092839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(version: 2021_05_23_045235) do
     t.string "contract_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "market_id"
     t.string "base"
     t.string "target"
     t.string "url"
@@ -61,6 +60,9 @@ ActiveRecord::Schema.define(version: 2021_05_23_045235) do
     t.decimal "open_interest"
     t.decimal "volume_24h"
     t.integer "expiring_at"
+    t.bigint "derivative_exchange_id"
+    t.index ["derivative_exchange_id"], name: "index_derivatives_on_derivative_exchange_id"
   end
 
+  add_foreign_key "derivatives", "derivative_exchanges"
 end

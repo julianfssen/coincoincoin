@@ -6,11 +6,11 @@ class PriceImporter
   end
 
   def import_daily_historical_derivative_prices_for_market(market_id:)
-    derivative_exchange_id = DerivativeExchange.find_by(coingecko_exchange_id: market_id).id
     response = @client.get_derivative_exchange(id: market_id, options: { include_tickers: true })
     tickers = response['tickers']
+    derivative_exchange_id = DerivativeExchange.find_by(coingecko_exchange_id: market_id).id
     tickers.each do |ticker|
-      derivative = Derivative.find_or_initialize_by(symbol: ticker['symbol'], market_id: derivative_exchange_id)
+      derivative = Derivative.find_or_initialize_by(symbol: ticker['symbol'], derivative_exchange_id: derivative_exchange_id)
       derivative.update(
         base: ticker['base'],
         target: ticker['target'],

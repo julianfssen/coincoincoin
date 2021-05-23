@@ -1,20 +1,11 @@
 <%= stylesheet_link_tag 'derivatives/index' %>
 
-<label for='markets'>
-  Market
-</label>
-
-<%= collection_select :derivative_exchange, :id, @derivative_exchanges, :id, :name, {}, { data: { controller: 'derivatives', action: 'derivatives#change', 'derivatives-target': 'derivativeExchange' } } %>
-
-<label for='contract-types'>
-  Contract Type
-</label>
-
-<select name='contract-types'>
-  <option value="any">Any</option>
-  <option value="futures">Futures</option>
-  <option value="perpetual">Perpetual</option>
-</select>
+<%= form_with url: derivatives_path, method: :get, scope: :filters, id: 'derivative-exchange-selector' do |f| %>
+  <%= f.label 'derivative-exchange-selector', 'Market' %>
+  <%= f.collection_select :derivative_exchange_id, @derivative_exchanges, :id, :name, {}, { id: 'derivative-exchange-selector', data: { controller: 'derivatives', action: 'derivatives#change', 'derivatives-target': 'derivativeExchange' } } %>
+  <%= f.label 'contract-type-selector', 'Contract Type' %>
+  <%= f.select :contract_type, @contract_types, {}, { id: 'contract-type-selector', data: { controller: 'derivatives', action: 'derivatives#change', 'derivatives-target': 'derivativeExchange' } } %>
+<% end %>
 
 <%= turbo_frame_tag 'derivatives', src: derivatives_path do %>
   <table>

@@ -1,10 +1,18 @@
 class DerivativesController < ApplicationController
+  CONTRACT_TYPES = ['Any', 'Futures', 'Perpetual']
+
   def index
     @derivative_exchanges = DerivativeExchange.all.order(:name)
-    @derivative_exchange_id = params[:derivative_exchange_id] || DerivativeExchange.find(1).id
+    @contract_types = CONTRACT_TYPES
+    filters = params[:filters]
+    if filters
+      @derivative_exchange_id = filters[:derivative_exchange_id].to_i
+      @contract_type = filters[:contract_type].downcase
+    else
+      @derivative_exchange_id = DerivativeExchange.find(1).id
+    end
     @sort = params[:sort]
-    @contract_type = params[:contract_type]
-    @derivatives = Derivative.where(market_id: @derivative_exchange_id)
+    @derivatives = Derivative.where(derivative_exchange_id: @derivative_exchange_id)
     case @sort
     when 'volume_asc'
       @derivatives = @derivatives.by_volume_24h_asc.limit(10)
@@ -23,7 +31,6 @@ class DerivativesController < ApplicationController
     else
       @derivatives = @derivatives.by_volume_24h_desc.limit(10)
     end
-    @derivatives = @derivatives.where(contract_type: @contract_type) if @contract_type
   end
 
   def show

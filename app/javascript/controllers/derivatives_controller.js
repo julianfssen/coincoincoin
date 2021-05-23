@@ -1,11 +1,14 @@
+import Rails from "@rails/ujs"
 import { Controller } from "stimulus"
 
 export default class extends Controller {
 	static targets = ['derivativeExchange']
 
+	form() {
+	}
+
 	change() {
-		console.log('Element: ', this.element);
-		console.log('Element Value: ', this.element.value);
-		console.log('Element: ', this.derivativeExchangeTarget);
+		const form = this.element.parentElement;
+		Rails.fire(form, 'submit');
 	}
 }

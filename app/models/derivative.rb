@@ -1,4 +1,6 @@
 class Derivative < ApplicationRecord
+  belongs_to :derivative_exchange
+
   scope :by_volume_24h_asc, -> { order(:volume_24h) }
   scope :by_volume_24h_desc, -> { order(volume_24h: :desc) }
   scope :by_price_asc, -> { order(:price) }
