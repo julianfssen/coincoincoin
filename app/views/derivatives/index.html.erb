@@ -1,51 +1,55 @@
 <%= stylesheet_link_tag 'derivatives/index' %>
 
-<%= form_with url: derivatives_path, method: :get, scope: :filters, id: 'derivative-exchange-selector' do |f| %>
-  <%= f.label 'derivative-exchange-selector', 'Market' %>
-  <%= f.collection_select :derivative_exchange_id, @derivative_exchanges, :id, :name, {}, { id: 'derivative-exchange-selector', data: { controller: 'derivatives', action: 'derivatives#change', 'derivatives-target': 'derivativeExchange' } } %>
-  <%= f.label 'contract-type-selector', 'Contract Type' %>
-  <%= f.select :contract_type, @contract_types, {}, { id: 'contract-type-selector', data: { controller: 'derivatives', action: 'derivatives#change', 'derivatives-target': 'derivativeExchange' } } %>
-<% end %>
-
-<%= turbo_frame_tag 'derivatives', src: derivatives_path do %>
-  <table>
-    <tr>
+<div class='container'>
+  <div class='derivatives-container'>
+    <div class='single-derivative-container'>
       <% if @sort.eql? 'volume_asc' %>
-        <th><a href='?sort=volume_desc'># ▴</a></th>
+        <div class='rank-container'><a href='?sort=volume_desc'># ▴</a></div>
       <% else %>
-        <th><a href='?sort=volume_asc'># ▾</a></th>
+        <div class='rank-container'><a href='?sort=volume_asc'># ▾</a></div>
       <% end %>
       <% if @sort.eql? 'ticker_asc' %>
-        <th><a href='?sort=ticker_desc'>Ticker ▴</a></th>
+        <div class='symbol-container'><a href='?sort=ticker_desc'>Ticker ▴</a></div>
       <% else %>
-        <th><a href='?sort=ticker_asc'>Ticker ▾</a></th>
+        <div class='symbol-container'><a href='?sort=ticker_asc'>Ticker ▾</a></div>
       <% end %>
       <% if @sort.eql? 'price_asc' %>
-        <th><a href='?sort=price_desc'>Price ▴</a></th>
+        <div class='price-container'><a href='?sort=price_desc'>Price ▴</a></div>
       <% else %>
-        <th><a href='?sort=price_asc'>Price ▾</a></th>
+        <div class='price-container'><a href='?sort=price_asc'>Price ▾</a></div>
       <% end %>
       <% if @sort.eql? 'price_percentage_change_24h_asc' %>
-        <th><a href='?sort=price_percentage_change_24h_desc'>24h % ▴</a></th>
+        <div class='price-percentage-change-container'><a href='?sort=price_percentage_change_24h_desc'>24h % ▴</a></div>
       <% else %>
-        <th><a href='?sort=price_percentage_change_24h_asc'>24h % ▾</a></th>
+        <div class='price-percentage-change-container'><a href='?sort=price_percentage_change_24h_asc'>24h % ▾</a></div>
       <% end %>
-    </tr>
-    <% @derivatives.each_with_index do |derivative, index| %>
-      <tr>
-        <td class='rank-container'>
-          <%= index + 1 %>
-        </td>
-        <td class='symbol-container'>
-          <%= derivative.symbol %>
-        </td>
-        <td class='price-container'>
-          <%= derivative.price %>
-        </td>
-        <td class='price-percentage-change-container'>
-          <%= derivative.price_percentage_change_24h %>
-        </td>
-      </tr>
+    </div>
+    <div>
+      <% @derivatives.each_with_index do |derivative, index| %>
+        <div class='single-derivative-container'>
+          <div class='rank-container'>
+            <p><%= index + 1 %></p>
+          </div>
+          <div class='symbol-container'>
+            <p><%= derivative.symbol %></p>
+          </div>
+          <div class='price-container'>
+            <p><%= derivative.price %></p>
+          </div>
+          <div class='price-percentage-change-container'>
+            <p><%= derivative.price_percentage_change_24h %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class='form-container'>
+    <%= form_with url: derivatives_path, method: :get, scope: :filters, local: true do |f| %>
+      <%= f.label 'derivative-exchange-selector', 'Market' %>
+      <%= f.collection_select :derivative_exchange_id, @derivative_exchanges, :id, :name, { selected: @derivative_exchange_id }, { id: 'derivative-exchange-selector', data: { controller: 'derivatives', action: 'derivatives#change' } } %>
+      <%= f.label 'contract-type-selector', 'Contract Type' %>
+      <%= f.select :contract_type, @contract_types, { selected: @contract_type.titleize }, { id: 'contract-type-selector', data: { controller: 'derivatives', action: 'derivatives#change' } } %>
     <% end %>
-  </table>
-<% end %>
+  </div>
+</div>

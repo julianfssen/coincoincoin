@@ -9,6 +9,6 @@ export default class extends Controller {
 
 	change() {
 		const form = this.element.parentElement;
-		Rails.fire(form, 'submit');
+		form.submit();
 	}
 }

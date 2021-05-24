@@ -1,6 +1,34 @@
 // Place all the styles related to the Derivatives controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.container {
+	display: flex;
+	flex-direction: row;
+}
+
+.derivatives-container {
+	flex: 4
+}
+
+.form-container {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	label {
+		width: 100%;
+	}
+	select {
+		width: 100%;
+		margin-top: 0.5em;
+		margin-bottom: 2em;
+	}
+}
+
+.single-derivative-container {
+	display: flex;
+	flex-direction: row;
+}
+
 .rank-container {
 	flex: 1;
 	display: flex;

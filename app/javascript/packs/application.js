@@ -16,3 +16,4 @@ import "chartkick/chart.js"
 // const imagePath = (name) => images(name, true)
 
 import "controllers"
+import "@hotwired/turbo-rails"

@@ -5,6 +5,13 @@ class PriceImporter
     @client = CoingeckoRuby.client
   end
 
+  def import_daily_historical_derivative_prices_from_markets
+    markets = DerivativeExchange.all
+    markets.each do |market|
+      import_daily_historical_derivative_prices_for_market(market_id: market.coingecko_exchange_id)
+    end
+  end
+
   def import_daily_historical_derivative_prices_for_market(market_id:)
     response = @client.get_derivative_exchange(id: market_id, options: { include_tickers: true })
     tickers = response['tickers']
