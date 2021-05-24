@@ -4,6 +4,7 @@ class DerivativesController < ApplicationController
   def index
     @derivative_exchanges = DerivativeExchange.all.order(:name)
     @contract_types = CONTRACT_TYPES
+    @contract_type = 'any'
     filters = params[:filters]
     if filters
       @derivative_exchange_id = filters[:derivative_exchange_id].to_i
@@ -31,6 +32,7 @@ class DerivativesController < ApplicationController
     else
       @derivatives = @derivatives.by_volume_24h_desc.limit(10)
     end
+    @derivatives = @derivatives.where(contract_type: @contract_type) unless @contract_type.eql? 'any'
   end
 
   def show
