@@ -4,9 +4,11 @@
   <div class='derivatives-container'>
     <div class='single-derivative-container'>
       <% if @sort.eql? 'volume_asc' %>
-        <div class='rank-container'><a href='?sort=volume_desc'># ▴</a></div>
+        <%# <div class='rank-container'><a href='?sort=volume_desc'># ▴</a></div> %>
+        <div class='rank-container'><%= link_to '# ▴', derivatives_path(params.merge(filters: { sort: 'volume_desc'})) %></div>
       <% else %>
-        <div class='rank-container'><a href='?sort=volume_asc'># ▾</a></div>
+        <%# <div class='rank-container'><a href='?sort=volume_asc'># </a></div> %>
+        <div class='rank-container'><%= link_to '# ▾', derivatives_path(params.merge(filters: { sort: 'volume_asc' })) %></div>
       <% end %>
       <% if @sort.eql? 'ticker_asc' %>
         <div class='symbol-container'><a href='?sort=ticker_desc'>Ticker ▴</a></div>

@@ -5,14 +5,14 @@ class DerivativesController < ApplicationController
     @derivative_exchanges = DerivativeExchange.all.order(:name)
     @contract_types = CONTRACT_TYPES
     @contract_type = 'any'
-    filters = params[:filters]
+    filters = filter_params
     if filters
       @derivative_exchange_id = filters[:derivative_exchange_id].to_i
       @contract_type = filters[:contract_type].downcase
     else
       @derivative_exchange_id = DerivativeExchange.find(1).id
     end
-    @sort = params[:sort]
+    @sort = filters[:sort]
     @derivatives = Derivative.where(derivative_exchange_id: @derivative_exchange_id)
     case @sort
     when 'volume_asc'
@@ -36,5 +36,11 @@ class DerivativesController < ApplicationController
   end
 
   def show
+  end
+
+  private
+
+  def filter_params
+    params.require(:filters).permit(:sort, :derivative_exchange_id, :contract_type)
   end
 end
