@@ -1,13 +1,26 @@
 // Place all the styles related to the Derivatives controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+@font-face {
+  font-family: system;
+  font-style: normal;
+  font-weight: 300;
+  src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+}
+
+body {
+  font-family: "system";
+}
+
 .container {
+	width: 80%;
+	margin: auto;
 	display: flex;
 	flex-direction: row;
 }
 
 .derivatives-container {
-	flex: 4
+	flex: 5
 }
 
 .form-container {
@@ -33,16 +46,100 @@
 	flex: 1;
 	display: flex;
 	justify-content: center;
+	align-items: center;
+	padding-top: 16px;
+	padding-bottom: 16px;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: gainsboro;
 }
 
 .symbol-container {
 	flex: 2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: gainsboro;
 }
 
 .price-container {
 	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: gainsboro;
 }
 
 .price-percentage-change-container {
 	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: gainsboro;
+}
+
+.rank-sort-container {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: gainsboro;
+}
+
+.symbol-sort-container {
+	flex: 2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: gainsboro;
+}
+
+.price-sort-container {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: gainsboro;
+}
+
+.price-percentage-change-sort-container {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: gainsboro;
+}
+
+.filter-link {
+  text-decoration: none;
+	font-weight: bold;
+	color: black;
+}
+
+.negative-price {
+	color: red;
+}
+
+.positive-price {
+	color: green;
 }

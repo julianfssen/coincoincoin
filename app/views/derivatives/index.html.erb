@@ -4,26 +4,29 @@
   <div class='derivatives-container'>
     <div class='single-derivative-container'>
       <% if @sort.eql? 'volume_asc' %>
-        <%# <div class='rank-container'><a href='?sort=volume_desc'># ▴</a></div> %>
-        <div class='rank-container'><%= link_to '# ▴', derivatives_path(params.merge(filters: { sort: 'volume_desc'})) %></div>
+        <div class='rank-sort-container'><%= link_to '# ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_desc'}), class: 'filter-link' %></div>
       <% else %>
-        <%# <div class='rank-container'><a href='?sort=volume_asc'># </a></div> %>
-        <div class='rank-container'><%= link_to '# ▾', derivatives_path(params.merge(filters: { sort: 'volume_asc' })) %></div>
+        <div class='rank-sort-container'><%= link_to '# ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_asc' }), class: 'filter-link' %></div>
       <% end %>
       <% if @sort.eql? 'ticker_asc' %>
-        <div class='symbol-container'><a href='?sort=ticker_desc'>Ticker ▴</a></div>
+        <div class='symbol-sort-container'><%= link_to 'Ticker ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'ticker_desc'}), class: 'filter-link' %></div>
       <% else %>
-        <div class='symbol-container'><a href='?sort=ticker_asc'>Ticker ▾</a></div>
+        <div class='symbol-sort-container'><%= link_to 'Ticker ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'ticker_asc'}), class: 'filter-link' %></div>
       <% end %>
       <% if @sort.eql? 'price_asc' %>
-        <div class='price-container'><a href='?sort=price_desc'>Price ▴</a></div>
+        <div class='price-sort-container'><%= link_to 'Price ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_desc'}), class: 'filter-link' %></div>
       <% else %>
-        <div class='price-container'><a href='?sort=price_asc'>Price ▾</a></div>
+        <div class='price-sort-container'><%= link_to 'Price ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_asc'}), class: 'filter-link' %></div>
       <% end %>
       <% if @sort.eql? 'price_percentage_change_24h_asc' %>
-        <div class='price-percentage-change-container'><a href='?sort=price_percentage_change_24h_desc'>24h % ▴</a></div>
+        <div class='price-percentage-change-sort-container'><%= link_to '24h % ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_percentage_change_24h_desc'}), class: 'filter-link' %></div>
       <% else %>
-        <div class='price-percentage-change-container'><a href='?sort=price_percentage_change_24h_asc'>24h % ▾</a></div>
+        <div class='price-percentage-change-sort-container'><%= link_to '24h % ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_percentage_change_24h_asc'}), class: 'filter-link' %></div>
+      <% end %>
+      <% if @sort.eql? 'volume_asc' %>
+        <div class='rank-sort-container'><%= link_to 'Volume (24h) ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_desc'}), class: 'filter-link' %></div>
+      <% else %>
+        <div class='rank-sort-container'><%= link_to 'Volume (24h) ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_asc'}), class: 'filter-link' %></div>
       <% end %>
     </div>
     <div>
@@ -36,10 +39,21 @@
             <p><%= derivative.symbol %></p>
           </div>
           <div class='price-container'>
-            <p><%= derivative.price %></p>
+          <% if derivative.price < 1 %>
+            <p><%= number_to_currency(derivative.price, precision: 4) %></p>
+          <% else %>
+            <p><%= number_to_currency(derivative.price) %></p>
+          <% end %>
           </div>
           <div class='price-percentage-change-container'>
-            <p><%= derivative.price_percentage_change_24h %></p>
+          <% if derivative.price_percentage_change_24h < 0 %>
+            <p class='negative-price'><%= number_with_precision(derivative.price_percentage_change_24h, precision: 2) %>%</p>
+          <% else %>
+            <p class='positive-price'><%= number_with_precision(derivative.price_percentage_change_24h, precision: 2) %>%</p>
+          <% end %>
+          </div>
+          <div class='rank-container'>
+            <p>$<%= number_with_precision(derivative.volume_24h, precision: 0, delimiter: ',') %></p>
           </div>
         </div>
       <% end %>
@@ -51,7 +65,11 @@
       <%= f.label 'derivative-exchange-selector', 'Market' %>
       <%= f.collection_select :derivative_exchange_id, @derivative_exchanges, :id, :name, { selected: @derivative_exchange_id }, { id: 'derivative-exchange-selector', data: { controller: 'derivatives', action: 'derivatives#change' } } %>
       <%= f.label 'contract-type-selector', 'Contract Type' %>
-      <%= f.select :contract_type, @contract_types, { selected: @contract_type.titleize }, { id: 'contract-type-selector', data: { controller: 'derivatives', action: 'derivatives#change' } } %>
+      <%= f.select :contract_type, @contract_types.map { |type| type.titleize }, { selected: @contract_type.titleize }, { id: 'contract-type-selector', data: { controller: 'derivatives', action: 'derivatives#change' } } %>
+      <%= f.label 'base-currency-selector', 'Base' %>
+      <%= f.select :base_currency, @base_currencies, { selected: @base_currency }, { id: 'base-currency-selector', data: { controller: 'derivatives', action: 'derivatives#change' } } %>
+      <%= f.label 'target-currency-selector', 'Target' %>
+      <%= f.select :target_currency, @target_currencies, { selected: @target_currency }, { id: 'target-currency-selector', data: { controller: 'derivatives', action: 'derivatives#change' } } %>
     <% end %>
   </div>
 </div>
