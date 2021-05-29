@@ -10,6 +10,8 @@
 
 body {
   font-family: "system";
+	color: rgba(255, 255, 255, 0.8);
+	background-color: #121212;
 }
 
 .container {
@@ -133,13 +135,13 @@ body {
 .filter-link {
   text-decoration: none;
 	font-weight: bold;
-	color: black;
+	color: rgba(255, 255, 255, 0.8);
 }
 
 .negative-price {
-	color: red;
+	color: #e54304;
 }
 
 .positive-price {
-	color: green;
+	color: #61d800;
 }
