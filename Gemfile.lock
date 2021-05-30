@@ -102,6 +102,7 @@ GEM
     nokogiri (1.11.4)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
+    pagy (3.13.0)
     pg (1.2.3)
     public_suffix (4.0.6)
     puma (4.3.8)
@@ -209,6 +210,7 @@ DEPENDENCIES
   coingecko_ruby
   jbuilder (~> 2.7)
   listen (~> 3.2)
+  pagy (~> 3.5)
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.7)
