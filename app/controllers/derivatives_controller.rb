@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 class DerivativesController < ApplicationController
   include Pagy::Backend
-  CONTRACT_TYPES = ['any', 'futures', 'perpetual']
-  BASE_CURRENCIES = ["Any", "ETH", "BCH", "BNB", "COTI", "RUNE", "BZRX", "ALICE", "LINK", "QTUM", "XEM", "DOT", "VET", "XRP", "LIT", "KAVA", "BAT", "KNC", "DEFI", "SXP", "LINA", "ADA", "LTC", "GRT", "BTC", "BEL", "LRC", "STORJ", "IOST", "AVAX", "BTCST", "MANA", "DOGE", "COMP", "EOS", "XLM", "NEO", "OCEAN", "BTS", "THETA", "REN", "FIL", "EGLD", "RVN", "DENT", "SRM", "TRX", "ZRX", "TRB", "STMX", "CRV", "UNFI", "FTM", "DODO", "ETC", "IOTA", "TRU", "ZEC", "RSR", "ICP", "MATIC", "FLM", "ATOM", "MTL", "TOMO", "ONT", "ZEN", "SKL", "SNX", "UNI", "BTT", "SUSHI", "BAND", "HNT", "AXS", "SOL", "ENJ", "CVC", "ONE", "XMR", "CELR", "ICX", "SFP", "RLC", "OKB", "SAND", "XTZ", "YFII", "DASH", "LUNA", "CHZ", "OGN", "OMG", "ALPHA", "ZIL", "BAKE", "YFI", "HOT", "KSM", "WAVES", "CTK", "NKN", "HBAR", "1INCH", "MKR", "BLZ", "NEAR", "ALGO", "AKRO", "CHR", "BAL", "REEF", "LEO", "RAMP", "CRO", "BAO", "KIN", "AAVE", "HT", "BNT", "AMPL", "ALT", "BSV", "XAUT", "AR", "MTA", "MEDIA", "SHIB", "DMG", "MID", "SHIT", "DRGN", "USDT", "BTMX", "STX", "CREAM", "BRZ", "FTT", "EXCH", "BADGER", "MAPS", "SRN", "CUSDT", "UNISWAP", "NPXS", "PRIV", "PAXG", "LEND", "RAY", "HOLY", "TRYB", "FLOW", "SECO", "FIDA", "SC", "AUDIO", "CAKE", "ALCX", "OXY", "CONV", "CEL", "ROOK", "DAWN", "PROM", "PUNDIX", "STEP", "ORBS", "HUM", "PERP", "ACH", "ANKR", "ANT", "BAGS", "BTM", "CSPR", "FORTH", "FRONT", "GXC", "JST", "LAT", "MASK", "MASS", "O3", "PEARL", "PHA", "RNDR", "SUN", "SWRV", "UMA", "WNXM", "WOO", "XCH", "YFV", "ZKS", "TORN", "LON", "MIR", "DORA", "XBT", "AMP", "BTCDOM", "EUR", "EUROPE50IX", "GBP", "GERMANY30IX", "IOT", "JPY", "XAG", "BBDX", "BDI", "XAUB", "DGB", "BCHA", "BEAM", "GRIN", "HIVE", "IRIS", "LPT", "MDA", "NEST", "ROSE", "SERO", "KLAY", "TMTG", "BCHABC", "DFN", "USDC", "1INCH-DIVE-5.00-D1001", "1INCH-MOON-3.50-M1001", "COPE-MOON-1.00-M1502", "DOT-DIVE-42.00-D0801", "DOT-MOON-30.00-M0801", "ETH-DIVE-2200-D0214", "FTT-DIVE-50.0-D0405", "FTT-MOON-32.0-M0405", "SUSHI-DIVE-20.50-D0901", "SUSHI-MOON-13.50-M0901", "WOZX", "1000SHIB", "LSK", "WRX", "PLINK", "WETH"]
-  TARGET_CURRENCIES = ["Any", "USD", "USDT", "BUSD", "XBT", "BTCF0", "USDC", "USD-R", "DKKT", "BTC", "JPY", "DAI"]
+  CONTRACT_TYPES = %w[Any Futures Perpetual].freeze
+  BASE_CURRENCIES = %w[Any 1000SHIB 1INCH 1INCH-DIVE-5.00-D1001 1INCH-MOON-3.50-M1001 AAVE ACH ADA AKRO ALCX ALGO ALICE ALPHA ALT AMP AMPL ANKR ANT AR ATOM AUDIO AVAX AXS BADGER BAGS BAKE BAL BAND BAO BAT BBDX BCH BCHA BCHABC BDI BEAM BEL BLZ BNB BNT BRZ BSV BTC BTCDOM BTCST BTM BTMX BTS BTT BZRX CAKE CEL CELR CHR CHZ COMP CONV COPE-MOON-1.00-M1502 COTI CREAM CRO CRV CSPR CTK CUSDT CVC DASH DAWN DEFI DENT DFN DGB DMG DODO DOGE DORA DOT DOT-DIVE-42.00-D0801 DOT-MOON-30.00-M0801 DRGN EGLD ENJ EOS ETC ETH ETH-DIVE-2200-D0214 EUR EUROPE50IX EXCH FIDA FIL FLM FLOW FORTH FRONT FTM FTT FTT-DIVE-50.0-D0405 FTT-MOON-32.0-M0405 GBP GERMANY30IX GRIN GRT GXC HBAR HIVE HNT HOLY HOT HT HUM ICP ICX IOST IOT IOTA IRIS JPY JST KAVA KIN KLAY KNC KSM LAT LEND LEO LINA LINK LIT LON LPT LRC LSK LTC LUNA MANA MAPS MASK MASS MATIC MDA MEDIA MID MIR MKR MTA MTL NEAR NEO NEST NKN NPXS O3 OCEAN OGN OKB OMG ONE ONT ORBS OXY PAXG PEARL PERP PHA PLINK PRIV PROM PUNDIX QTUM RAMP RAY REEF REN RLC RNDR ROOK ROSE RSR RUNE RVN SAND SC SECO SERO SFP SHIB SHIT SKL SNX SOL SRM SRN STEP STMX STORJ STX SUN SUSHI SUSHI-DIVE-20.50-D0901 SUSHI-MOON-13.50-M0901 SWRV SXP THETA TMTG TOMO TORN TRB TRU TRX TRYB UMA UNFI UNI UNISWAP USDC USDT VET WAVES WETH WNXM WOO WOZX WRX XAG XAUB XAUT XBT XCH XEM XLM XMR XRP XTZ YFI YFII YFV ZEC ZEN ZIL ZKS ZRX].freeze
+  TARGET_CURRENCIES = %w[Any BTC BTCF0 BUSD DAI DKKT JPY USD USD-R USDC USDT XBT].freeze
 
   def index
     @derivative_exchanges = DerivativeExchange.all.order(:name)
@@ -11,13 +12,15 @@ class DerivativesController < ApplicationController
     @target_currencies = TARGET_CURRENCIES
     if params[:filters]
       @derivative_exchange_id = filter_params[:derivative_exchange_id] || 1
-      @contract_type = filter_params[:contract_type] || 'any'
+      @contract_type = filter_params[:contract_type] || 'Any'
       @sort = filter_params[:sort]
+      @base_currency = filter_params[:base_currency] || 'Any'
+      @target_currency = filter_params[:target_currency] || 'Any'
     else
-      @base_currency = 'BTC'
-      @target_currency = 'USD'
+      @base_currency = 'Any'
+      @target_currency = 'Any'
       @derivative_exchange_id = 1
-      @contract_type = 'any'
+      @contract_type = 'Any'
     end
     case @sort
     when 'volume_asc'
@@ -37,8 +40,10 @@ class DerivativesController < ApplicationController
     else
       @pagy, @derivatives = pagy(Derivative.where(derivative_exchange_id: @derivative_exchange_id).by_volume_24h_desc)
     end
-    @contract_type = @contract_type.downcase
-    @pagy, @derivatives = pagy(@derivatives.where(contract_type: @contract_type)) unless @contract_type.eql? 'any'
+    @pagy, @derivatives = pagy(@derivatives.where(contract_type: @contract_type.downcase)) unless @contract_type.eql? 'Any'
+    @pagy, @derivatives = pagy(@derivatives.where(base: @base_currency)) unless @base_currency.eql? 'Any'
+    @pagy, @derivatives = pagy(@derivatives.where(target: @target_currency)) unless @target_currency.eql? 'Any'
+    @page = (@pagy.page - 1) * 20
   end
 
   def show
