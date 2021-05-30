@@ -17,3 +17,4 @@ import "chartkick/chart.js"
 
 import "controllers"
 import "@hotwired/turbo-rails"
+import "../stylesheets/application.scss";
