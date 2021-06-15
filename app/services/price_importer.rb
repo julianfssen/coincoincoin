@@ -19,6 +19,8 @@ class PriceImporter
     tickers.each_slice(100) do |batch|
       batch.each do |ticker|
         derivative = Derivative.find_or_initialize_by(symbol: ticker['symbol'], derivative_exchange_id: derivative_exchange_id)
+        derivative_daily_historical_price = DerivativeDailyHistoricalPrice.new(derivative_id: derivative.id)
+        derivative_daily_historical_price.update(derivative_exchange_id: derivative_exchange_id, price: ticker['last'])
         derivative.update(
           base: ticker['base'],
           target: ticker['target'],
@@ -30,7 +32,8 @@ class PriceImporter
           bid_ask_spread: ticker['bid_ask_spread'],
           funding_rate: ticker['funding_rate'],
           contract_type: ticker['contract_type'],
-          expiring_at: ticker['expired_at'].nil? ? 0 : ticker['expired_at']
+          expiring_at: ticker['expired_at'].nil? ? 0 : ticker['expired_at'],
+          image_url: ticker['image_url']
         )
       end
       # derivative.update(expired: true) if Time.at(ticker['expired_at']) && Time.at(ticker['expired_at']) < Time.now

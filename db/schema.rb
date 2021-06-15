@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_23_092839) do
+ActiveRecord::Schema.define(version: 2021_06_15_130502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(version: 2021_05_23_092839) do
     t.string "name"
     t.string "ticker"
     t.decimal "last"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "crypto_icons", force: :cascade do |t|
+    t.string "name"
+    t.string "url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -61,6 +68,7 @@ ActiveRecord::Schema.define(version: 2021_05_23_092839) do
     t.decimal "volume_24h"
     t.integer "expiring_at"
     t.bigint "derivative_exchange_id"
+    t.string "image_url"
     t.index ["derivative_exchange_id"], name: "index_derivatives_on_derivative_exchange_id"
   end
 

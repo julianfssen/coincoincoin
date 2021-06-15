@@ -47,6 +47,7 @@ class DerivativesController < ApplicationController
   end
 
   def show
+    @derivative = Derivative.find(params[:id])
   end
 
   private

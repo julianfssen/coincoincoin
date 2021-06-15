@@ -4,37 +4,37 @@
       <div class='flex flex-row'>
         <div class='w-1/6 flex justify-center'>
         <% if @sort.eql? 'volume_asc' %>
-          <%= link_to '# ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_desc'}), class: 'font-bold' %>
+          <%= link_to '# ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_desc'}), class: 'font-bold text-gray-200' %>
         <% else %>
-          <%= link_to '# ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_asc' }), class: 'font-bold' %>
+          <%= link_to '# ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_asc' }), class: 'font-bold text-gray-200' %>
         <% end %>
         </div>
         <div class='w-2/6 flex justify-start'>
         <% if @sort.eql? 'ticker_asc' %>
-          <%= link_to 'Ticker ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'ticker_desc'}), class: 'font-bold' %>
+          <%= link_to 'Ticker ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'ticker_desc'}), class: 'font-bold text-gray-200' %>
         <% else %>
-          <%= link_to 'Ticker ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'ticker_asc'}), class: 'font-bold' %>
+          <%= link_to 'Ticker ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'ticker_asc'}), class: 'font-bold text-gray-200' %>
         <% end %>
         </div>
         <div class='w-1/6 flex justify-end'>
         <% if @sort.eql? 'price_asc' %>
-          <%= link_to 'Price ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_desc'}), class: 'font-bold' %>
+          <%= link_to 'Price ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_desc'}), class: 'font-bold text-gray-200' %>
         <% else %>
-          <%= link_to 'Price ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_asc'}), class: 'font-bold' %>
+          <%= link_to 'Price ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_asc'}), class: 'font-bold text-gray-200' %>
         <% end %>
         </div>
         <div class='w-1/6 flex justify-end'>
         <% if @sort.eql? 'price_percentage_change_24h_asc' %>
-          <%= link_to '24h % ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_percentage_change_24h_desc'}), class: 'font-bold' %>
+          <%= link_to '24h % ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_percentage_change_24h_desc'}), class: 'font-bold text-gray-200' %>
         <% else %>
-          <%= link_to '24h % ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_percentage_change_24h_asc'}), class: 'font-bold' %>
+          <%= link_to '24h % ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_percentage_change_24h_asc'}), class: 'font-bold text-gray-200' %>
         <% end %>
         </div>
         <div class='w-1/6 flex justify-end'>
         <% if @sort.eql? 'volume_asc' %>
-          <%= link_to 'Volume (24h) ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_desc'}), class: 'font-bold' %>
+          <%= link_to 'Volume (24h) ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_desc'}), class: 'font-bold text-gray-200' %>
         <% else %>
-          <%= link_to 'Volume (24h) ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_asc'}), class: 'font-bold' %>
+          <%= link_to 'Volume (24h) ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_asc'}), class: 'font-bold text-gray-200' %>
         <% end %>
         </div>
       </div>
@@ -45,7 +45,9 @@
               <p><%= index + 1 + @page %></p>
             </div>
             <div class='w-2/6 flex items-center justify-start'>
-              <p class='font-semibold'><%= derivative.symbol %></p>
+              <%= image_tag("https://icons.bitbot.tools/api/#{derivative.base.downcase}/32x32", class: 'transform scale-75', onerror: "this.style.display='none'") %>
+              <%= image_tag("https://icons.bitbot.tools/api/#{derivative.target.downcase}/32x32", class: 'transform scale-75', onerror: "this.style.display='none'") %>
+              <p class='ml-5 font-semibold'><%= link_to(derivative.symbol, derivative_path(id: derivative.id)) %></p>
             </div>
             <div class='w-1/6 flex items-center justify-end'>
             <% if derivative.price < 1 %>

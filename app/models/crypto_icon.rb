@@ -1,0 +1,2 @@
+class CryptoIcon < ApplicationRecord
+end

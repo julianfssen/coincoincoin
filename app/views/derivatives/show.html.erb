@@ -1,2 +1,14 @@
-<h1>Derivatives#show</h1>
-<p>Find me in app/views/derivatives/show.html.erb</p>
+<div>
+  <%= @derivative.symbol %>
+  <%= @derivative.price %>
+  <%= @derivative.price_percentage_change_24h %>
+  <%= @derivative.volume_24h %>
+  <%= @derivative.contract_type %>
+  <%= @derivative.base %>
+  <%= @derivative.target %>
+  <%= @derivative.url %>
+  <%= @derivative.expiring_at %>
+  <%= @derivative.funding_rate %>
+  <%= @derivative.bid_ask_spread %>
+  <%= @derivative.open_interest %>
+</div>
