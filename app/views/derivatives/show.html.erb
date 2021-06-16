@@ -1,14 +1,58 @@
-<div>
-  <%= @derivative.symbol %>
-  <%= @derivative.price %>
-  <%= @derivative.price_percentage_change_24h %>
-  <%= @derivative.volume_24h %>
-  <%= @derivative.contract_type %>
-  <%= @derivative.base %>
-  <%= @derivative.target %>
-  <%= @derivative.url %>
-  <%= @derivative.expiring_at %>
-  <%= @derivative.funding_rate %>
+<div class='w-3/4 my-5 mx-auto'>
+  <div class='flex flex-row'>
+    <div class='w-1/4'>
+      <div class='text-3xl font-bold'><%= @derivative.symbol %></div>
+      <div class='flex flex-row mt-2 items-center bg-gray-600 rounded-md'>
+        <div><%= image_tag(@derivative_exchange.image_url, class: 'transform scale-50') %></div>
+        <div><%= link_to("#{@derivative_exchange.name}", @derivative.url, target: :_blank) %></div>
+      </div>
+      <div class='flex flex-row my-2'>
+        <div class='flex flex-1 flex-row mr-1 items-center justify-center bg-gray-600 rounded-md'>
+          <span>Base: </span>
+          <%= image_tag("https://icons.bitbot.tools/api/#{@derivative.base.downcase}/32x32", class: 'transform scale-50', onerror: "this.style.display='none'") %>
+          <%= @derivative.base %>
+        </div>
+        <div class='flex flex-1 flex-row ml-1 items-center justify-center bg-gray-600 rounded-md'>
+          <span>Target: </span>
+          <%= image_tag("https://icons.bitbot.tools/api/#{@derivative.target.downcase}/32x32", class: 'transform scale-50', onerror: "this.style.display='none'") %>
+          <span class='font-semibold'><%= @derivative.target %></span>
+        </div>
+      </div>
+    </div>
+    <div class='flex w-3/4 items-center mx-8'>
+      <div class='flex flex-col'>
+        <div class='text-sm'>Price (USD)</div>
+        <div class='flex flex-row items-center'>
+          <% if @derivative.price < 1 %>
+            <div class='text-3xl font-semibold'><%= number_to_currency(@derivative.price, precision: 3) %></div>
+          <% else %>
+            <div class='text-3xl font-semibold'><%= number_to_currency(@derivative.price, precision: 2) %></div>
+          <% end %>
+          <% if @derivative.price_percentage_change_24h < 0 %>
+            <div class='ml-5 text-red-600 font-semibold'>▼ <%= number_with_precision(@derivative.price_percentage_change_24h, precision: 2) %>%</div>
+          <% else %>
+            <div class='ml-5 text-green-600 font-semibold'>▲ <%= number_with_precision(@derivative.price_percentage_change_24h, precision: 2) %>%</div>
+          <% end %>
+        </div>
+        <div>Volume (24h): <span class='font-semibold'>$<%= number_with_precision(@derivative.volume_24h, precision: 0, delimiter: ',') %></span></div>
+      </div>
+      <div class='flex flex-col'>
+        <div>
+          <div class='font-semibold'>Contract Type</div>
+          <div class=''><%= @derivative.contract_type.capitalize %></div>
+        </div>
+        <div>
+          <% if @derivative.contract_type.eql? "futures" %>
+            <div class='font-semibold'>Funding Rate</div>
+            <div class=''><%= @derivative.funding_rate %></div>
+          <% else %>
+            <div class='font-semibold'>Expiring At</div>
+            <div class=''><%= @derivative.expired %></div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
   <%= @derivative.bid_ask_spread %>
   <%= @derivative.open_interest %>
 </div>
