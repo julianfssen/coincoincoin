@@ -1,5 +1,5 @@
-<div class='w-5/6 my-5 mx-auto'>
-  <div class='flex flex-row'>
+<div class='w-5/6 my-5 mx-auto divide-y divide-current'>
+  <div class='flex flex-row my-8'>
     <div class='w-2/6'>
       <div class='text-3xl font-bold'><%= @derivative.symbol %></div>
       <div class='flex flex-row mt-2 items-center bg-gray-600 rounded-md'>
@@ -62,21 +62,51 @@
       </div>
     </div>
   </div>
-  <div>
-    <div class='w-3/4 mt-5'>
+  <div class=''>
+    <div class='w-3/4 mt-8'>
       <div class='flex flex-row'>
         <div class='w-1/2 flex flex-col items-center'>
-          <div class='text-xl font-semibold'>Spread (USD)</div>
-          <div><%= number_to_currency(@derivative.bid_ask_spread, precision: 5, strip_insignificant_zeros: true) %></div>
+          <div class=''>Spread (USD)</div>
+          <div class='text-xl font-semibold'><%= number_to_currency(@derivative.bid_ask_spread, precision: 5, strip_insignificant_zeros: true) %></div>
         </div>
         <div class='w-1/2 flex flex-col items-center'>
-          <div class='text-xl font-semibold'>Open Interest (USD)</div>
-          <div><%= number_to_currency(@derivative.open_interest) %></div>
+          <div class=''>Open Interest (USD)</div>
+          <div class='text-xl font-semibold'><%= number_to_currency(@derivative.open_interest) %></div>
         </div>
+      </div>
+      <div class='mt-8'>
+        <%= line_chart chart_path(@derivative.id),
+          colors: ['gainsboro', 'gainsboro'],
+          prefix: '$',
+          thousands: ',',
+          library: {
+            scales: {
+              x: {
+                ticks: {
+                  color: 'gainsboro',
+                  font: {
+                    weight: '600'
+                  },
+                }
+              },
+              y: {
+                grid: {
+                  display: true,
+                  drawBorder: false,
+                },
+                ticks: {
+                  color: 'gainsboro',
+                  font: {
+                    weight: '600'
+                  },
+                }
+              },
+            }
+          }
+        %>
       </div>
     </div>
     <div class='w-1/4'>
-      <%= line_chart chart_path(@derivative.id), colors: ['gainsboro'] %>
     </div>
   </div>
 </div>
