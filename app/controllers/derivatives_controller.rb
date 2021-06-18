@@ -49,6 +49,9 @@ class DerivativesController < ApplicationController
   def show
     @derivative = Derivative.find(params[:id])
     @derivative_exchange = DerivativeExchange.find(@derivative.derivative_exchange_id)
+    @user = Derivative.get_user('julianfssen')
+    pp Derivative.methods
+    pp @user
   end
 
   private

@@ -1,4 +1,5 @@
 class Derivative < ApplicationRecord
+  include TwitterClient
   belongs_to :derivative_exchange
 
   scope :by_volume_24h_asc, -> { order(:volume_24h) }
