@@ -79,8 +79,18 @@
           colors: ['gainsboro', 'gainsboro'],
           prefix: '$',
           thousands: ',',
+          precision: 3,
+          zeros: true,
+          max: nil,
+          min: nil,
           library: {
             scales: {
+              grid: {
+                display: true,
+                ticks: {
+                  display: false
+                }
+              },
               x: {
                 ticks: {
                   color: 'gainsboro',
@@ -91,8 +101,7 @@
               },
               y: {
                 grid: {
-                  display: true,
-                  drawBorder: false,
+                  color: '#505050',
                 },
                 ticks: {
                   color: 'gainsboro',
