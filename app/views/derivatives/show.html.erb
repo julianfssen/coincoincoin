@@ -62,7 +62,7 @@
       </div>
     </div>
   </div>
-  <div class=''>
+  <div class='flex flex-row'>
     <div class='w-3/4 mt-8'>
       <div class='flex flex-row'>
         <div class='w-1/2 flex flex-col items-center'>
@@ -115,7 +115,15 @@
         %>
       </div>
     </div>
-    <div class='w-1/4'>
+    <div class='w-1/4 flex flex-col items-center justify-center'>
+      <div>Trending for #<%= @derivative.symbol%></div>
+      <div class=''>
+        <% @tweets.each_with_index do |tweet, index| %>
+          <div class='flex flex-row'>
+          </div>
+          <div><%= tweet.text.truncate(75) %></div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
