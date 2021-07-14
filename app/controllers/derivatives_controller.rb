@@ -50,9 +50,8 @@ class DerivativesController < ApplicationController
     @derivative = Derivative.find(params[:id])
     @derivative_exchange = DerivativeExchange.find(@derivative.derivative_exchange_id)
     response = TweetkitService.new.search_tweets(@derivative.symbol, user_fields: ['username', 'profile_image_url'], expansions: ['author_id'])
-    binding.pry
     @tweets = response.tweets
-    @users = response.expansions.users
+    @users = response.resources.users
   end
 
   private

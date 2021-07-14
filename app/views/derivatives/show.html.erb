@@ -115,14 +115,25 @@
         %>
       </div>
     </div>
-    <div class='w-1/4 flex flex-col items-center justify-center'>
-      <div>Trending for #<%= @derivative.symbol%></div>
-      <div class=''>
-        <% @tweets.each_with_index do |tweet, index| %>
-          <div class='flex flex-row'>
-          </div>
-          <div><%= tweet.text.truncate(75) %></div>
+    <div class='w-1/4 flex flex-col items-center'>
+      <div class='mt-5 text-xl'>Latest tweets on <span class='font-semibold'>#<%= @derivative.symbol%></span></div>
+      <div class='mx-8'>
+      <% if @tweets.blank? %>
+        <div class='mt-8'>No discussions yet for #<%=@derivative.symbol%></div>
+      <% else %>
+        <% @tweets.each do |tweet| %>
+          <%= link_to "https://twitter.com/user/status/#{tweet.id}", class: 'font-medium' do %>
+            <div class='my-4'>
+              <div class='flex flex-row items-center'>
+                <% user = @users.find(tweet.author_id) %>
+                <div><%= image_tag(user['profile_image_url'], size: '32x32', class: 'rounded-full') %></div>
+                <div class='ml-3 text-base font-semibold'><%= user['username'] %></div>
+              </div>
+              <div class='mt-2 font-normal'><%= tweet.text.truncate(100) %></div>
+            </div>
+          <% end %>
         <% end %>
+      <% end %>
       </div>
     </div>
   </div>
