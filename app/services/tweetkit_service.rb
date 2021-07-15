@@ -1,8 +1,10 @@
 class TweetkitService
   include Tweetkit
 
+  BEARER_TOKEN = Rails.application.credentials.twitter[:bearer_token]
+
   def initialize
-    @client = Tweetkit::Client.new(bearer_token: 'AAAAAAAAAAAAAAAAAAAAAF92QwEAAAAAGqboFuBbSHHP%2BQQfpyzKYC0RXV4%3DuJj9zT85r65iwZZOyZIlUFJSxd1CwkGf5SqrhXSpWhuxtZKyi7')
+    @client = Tweetkit::Client.new(bearer_token: BEARER_TOKEN)
   end
 
   def search_tweets(query, **options)

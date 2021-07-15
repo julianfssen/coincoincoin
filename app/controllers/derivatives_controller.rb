@@ -49,7 +49,9 @@ class DerivativesController < ApplicationController
   def show
     @derivative = Derivative.find(params[:id])
     @derivative_exchange = DerivativeExchange.find(@derivative.derivative_exchange_id)
-    response = TweetkitService.new.search_tweets(@derivative.symbol, user_fields: ['username', 'profile_image_url'], expansions: ['author_id'])
+    response = Rails.cache.fetch("#{@derivative.symbol} tweets", expires_in: 5.minutes) do
+      TweetkitService.new.search_tweets(@derivative.symbol, user_fields: ['username', 'profile_image_url'], expansions: ['author_id'])
+    end
     @tweets = response.tweets
     @users = response.resources.users
   end
