@@ -116,7 +116,7 @@
       </div>
     </div>
     <div class='w-1/4 flex flex-col items-center'>
-      <div class='mt-5 text-xl'>Latest tweets on <span class='font-semibold'>#<%= @derivative.symbol%></span></div>
+      <div class='mt-5 text-xl'>Latest tweets on <span class='font-semibold'>#<%= link_to(@derivative.symbol, "https://twitter.com/hashtag/#{@derivative.symbol}", target: :_blank )%></span></div>
       <div class='mx-8'>
       <% if @tweets.blank? %>
         <div class='mt-8'>No discussions yet for #<%=@derivative.symbol%></div>

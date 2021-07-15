@@ -26,12 +26,15 @@ gem 'redis', '~> 4.0'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
+gem "aws-sdk-s3", require: false
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'chartkick'
 gem 'coingecko_ruby'
 gem 'pagy', '~> 3.5'
 gem 'stimulus-rails'
 gem 'turbo-rails'
+# gem 'tweetkit'
+# Local path for tweetkit development
 gem 'tweetkit', path: '/Users/foosiangsen/Projects/tweetkit'
 
 group :development, :test do

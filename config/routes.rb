@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root to: 'derivatives#index'
   resources :derivatives, only: %i[index show]
   resources :charts, only: %i[show]
   get 'coins', to: 'coins#index'
