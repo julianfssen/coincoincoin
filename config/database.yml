@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: coincoincoin_production
-  username: coincoincoin
-  password: <%= ENV['COINCOINCOIN_DATABASE_PASSWORD'] %>
+  database: coincoincoin
+  username: deploy
+  password: <%= ENV['DATABASE_PASSWORD'] %>
