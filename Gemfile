@@ -28,14 +28,18 @@ gem 'redis', '~> 4.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem "aws-sdk-s3", require: false
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'capistrano', '~> 3.11'
+gem 'capistrano-passenger', '~> 0.2'
+gem 'capistrano-rails', '~> 1.4'
+gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
 gem 'chartkick'
 gem 'coingecko_ruby'
 gem 'pagy', '~> 3.5'
 gem 'stimulus-rails'
 gem 'turbo-rails'
-# gem 'tweetkit'
+gem 'tweetkit'
 # Local path for tweetkit development
-gem 'tweetkit', path: '/Users/foosiangsen/Projects/tweetkit'
+# gem 'tweetkit', path: '/Users/foosiangsen/Projects/tweetkit'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
