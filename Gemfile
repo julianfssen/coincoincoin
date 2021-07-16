@@ -37,7 +37,7 @@ gem 'coingecko_ruby'
 gem 'pagy', '~> 3.5'
 gem 'stimulus-rails'
 gem 'turbo-rails'
-gem 'tweetkit'
+gem 'tweetkit', git: 'https://github.com/julianfssen/tweetkit'
 # Local path for tweetkit development
 # gem 'tweetkit', path: '/Users/foosiangsen/Projects/tweetkit'
 
