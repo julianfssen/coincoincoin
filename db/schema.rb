@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_14_142960) do
+ActiveRecord::Schema.define(version: 2021_07_17_144444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,20 @@ ActiveRecord::Schema.define(version: 2021_07_14_142960) do
     t.bigint "derivative_exchange_id"
     t.string "image_url"
     t.index ["derivative_exchange_id"], name: "index_derivatives_on_derivative_exchange_id"
+  end
+
+  create_table "news", force: :cascade do |t|
+    t.string "title"
+    t.string "domain"
+    t.text "summary"
+    t.string "preview_url"
+    t.string "published_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "unique_id", null: false
+    t.string "link"
+    t.string "currency"
+    t.index ["unique_id"], name: "index_news_on_unique_id", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

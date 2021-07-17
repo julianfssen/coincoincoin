@@ -49,11 +49,13 @@ class DerivativesController < ApplicationController
   def show
     @derivative = Derivative.find(params[:id])
     @derivative_exchange = DerivativeExchange.find(@derivative.derivative_exchange_id)
-    response = Rails.cache.fetch("#{@derivative.symbol} tweets", expires_in: 5.minutes) do
-      TweetkitService.new.search_tweets(@derivative.symbol, user_fields: ['username', 'profile_image_url'], expansions: ['author_id'])
+    symbol = @derivative.symbol
+    discussions = Rails.cache.fetch("#{symbol} tweets", expires_in: 5.minutes) do
+      TweetkitService.new.search_tweets(symbol, user_fields: ['username', 'profile_image_url'], expansions: ['author_id'])
     end
-    @tweets = response.tweets
-    @users = response.resources.users
+    @tweets = discussions.tweets
+    @users = discussions.resources.users
+    @news = News.where(currency: @derivative.base).where.not(domain: 'reddit.com').limit(5)
   end
 
   private

@@ -20,7 +20,15 @@
     <div class='flex w-4/6 items-center mx-8'>
       <div class='flex flex-col pl-4 w-2/4'>
         <div>
-          <div class='text-sm font-semibold'>Price (USD)</div>
+          <div class='flex flex-row items-center mb-1 text-lg font-semibold'>Price (USD) 
+            <%= link_to 'https://www.coingecko.com/' do %>
+              <span class='flex flex-row items-center font-light text-gray-400 text-xs ml-2'>
+                powered by <%= image_tag 'https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png',
+                                         size: '70x50',
+                                         class: 'p-1 ml-2 rounded-md bg-gray-200' %>
+              </span>
+            <% end %>
+          </div>
           <div class='flex flex-row items-center'>
             <% if @derivative.price < 1 %>
               <div class='text-3xl font-semibold'><%= number_to_currency(@derivative.price, precision: 3) %></div>
@@ -114,15 +122,51 @@
           }
         %>
       </div>
+      <div>
+        <div class='flex flex-row items-center mt-10 mb-3'>
+          <div class='text-2xl font-bold'>
+            Latest news for <%= @derivative.symbol %>
+          </div>
+          <div class='mx-2'>
+            -
+          </div>
+          <div class='flex items-center'>
+            Powered by <span class='ml-2 p-1 rounded-sm bg-gray-300 text-gray-800 text-sm font-mono font-bold'><%= link_to "</newscatcher>", 'https://newscatcherapi.com/', target: :_blank %></span>
+          </div>
+        </div>
+        <% if @news.present? %>
+          <% @news.each do |news| %>
+            <%= link_to news.link, target: :_blank do %>
+              <div class='flex flex-row mb-4'>
+                <div class='w-1/5 flex items-center justify-center'>
+                  <div><%= image_tag(news.preview_url, class: 'object-cover h-36 w-full rounded-md') %></div>
+                </div>
+                <div class='flex flex-col w-4/5 p-4'>
+                  <div class='font-semibold text-lg'><%= news.title %></div>
+                  <div class='mt-1 mb-4'><%= news.summary.truncate(300) %></div>
+                  <div class='flex flex-row'>
+                    <div class='text-sm text-gray-500'><%= news.domain %></div>
+                    <div class='ml-2 text-sm text-gray-500'>-</div>
+                    <div class='ml-2 text-sm text-gray-500'><%= time_ago_in_words(news.published_date) %> ago</div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
     </div>
     <div class='w-1/4 flex flex-col items-center'>
-      <div class='mt-5 text-xl'>Latest tweets on <span class='font-semibold'>#<%= link_to(@derivative.symbol, "https://twitter.com/hashtag/#{@derivative.symbol}", target: :_blank )%></span></div>
+      <div class='mt-5 text-xl'>
+        Latest tweets on
+        <span class='font-semibold'>#<%= link_to @derivative.symbol, "https://twitter.com/hashtag/#{@derivative.symbol}", target: :_blank %></span>
+      </div>
       <div class='mx-8'>
       <% if @tweets.blank? %>
-        <div class='mt-8'>No discussions yet for #<%=@derivative.symbol%></div>
+        <div class='mt-8'>No discussions yet for #<%= @derivative.symbol %></div>
       <% else %>
         <% @tweets.each do |tweet| %>
-          <%= link_to "https://twitter.com/user/status/#{tweet.id}", class: 'font-medium' do %>
+          <%= link_to "https://twitter.com/user/status/#{tweet.id}", target: :_blank, class: 'font-medium' do %>
             <div class='my-4'>
               <div class='flex flex-row items-center'>
                 <% user = @users.find(tweet.author_id) %>

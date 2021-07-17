@@ -2,3 +2,6 @@
   download_derivative_price_data:
     cron: '0 22 * * *'
     class: DownloadDerivativePriceDataJob
+  import_crypto_news:
+    cron: '0 21 * * *'
+    class: ImportCryptoNewsJob
