@@ -1,5 +1,4 @@
 :schedule:
   download_derivative_price_data:
-    # cron: '0 15 * * *'
+    cron: '0 22 * * *'
     class: DownloadDerivativePriceDataJob
-    every: '3m'
