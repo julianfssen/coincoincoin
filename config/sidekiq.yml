@@ -1,0 +1,4 @@
+:schedule:
+  download_derivative_price_data:
+    cron: '0 15 * * *'   # Runs once per minute
+    class: DownloadDerivativePriceDataJob
