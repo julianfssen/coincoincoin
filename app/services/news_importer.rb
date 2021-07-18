@@ -19,7 +19,9 @@ class NewsImporter
       news_for_currency = client.search(query)['articles']
       next if news_for_currency.blank?
 
-      news_for_currency.each do |news|
+      news_for_currency.each_with_index do |news, index|
+        break if index == 5
+
         next if news['clean_url'].include? 'reddit'
 
         record = News.new(unique_id: news['_id'])

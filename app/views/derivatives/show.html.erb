@@ -8,11 +8,11 @@
       </div>
       <div class='flex flex-row my-2'>
         <div class='flex flex-1 flex-row mr-1 items-center justify-center bg-gray-600 rounded-md'>
-          <%= image_tag("https://icons.bitbot.tools/api/#{@derivative.base.downcase}/32x32", class: 'transform scale-50', onerror: "this.style.display='none'") %>
+          <%= image_tag("https://cryptoicons.org/api/color/#{@derivative.base.downcase}/32", class: 'transform scale-50', onerror: "this.style.display='none'") %>
           <span class='font-semibold'><%= @derivative.base %></span>
         </div>
         <div class='flex flex-1 flex-row ml-1 items-center justify-center bg-gray-600 rounded-md'>
-          <%= image_tag("https://icons.bitbot.tools/api/#{@derivative.target.downcase}/32x32", class: 'transform scale-50', onerror: "this.style.display='none'") %>
+          <%= image_tag("https://cryptoicons.org/api/color/#{@derivative.target.downcase}/32", class: 'transform scale-50', onerror: "this.style.display='none'") %>
           <span class='font-semibold'><%= @derivative.target %></span>
         </div>
       </div>

@@ -54,8 +54,8 @@
               <p><%= index + 1 + @page %></p>
             </div>
             <div class='w-2/6 flex items-center justify-start'>
-              <%= image_tag("https://icons.bitbot.tools/api/#{derivative.base.downcase}/32x32", class: 'transform scale-75', onerror: "this.style.display='none'") %>
-              <%= image_tag("https://icons.bitbot.tools/api/#{derivative.target.downcase}/32x32", class: 'transform scale-75', onerror: "this.style.display='none'") %>
+              <%= image_tag("https://cryptoicons.org/api/color/#{derivative.base.downcase}/32", class: 'transform scale-75', onerror: "this.style.display='none'") %>
+              <%= image_tag("https://cryptoicons.org/api/color/#{derivative.target.downcase}/32", class: 'transform scale-75', onerror: "this.style.display='none'") %>
               <p class='ml-5 font-semibold'><%= link_to(derivative.symbol, derivative_path(id: derivative.id)) %></p>
             </div>
             <div class='w-1/6 flex items-center justify-end'>
