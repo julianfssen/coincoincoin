@@ -1,9 +1,12 @@
 <div class='my-8'>
   <div class='flex flex-row'>
     <div class='w-3/4 flex-auto'>
-      <div>
+      <div class='flex flex-row items-center justify-between mb-6'>
+        <div class='text-xl font-semibold ml-28'>
+          <%= "CoinCoinCoin - Crypto Derivatives & Futures Prices" %>
+        </div>
         <%= link_to 'https://www.coingecko.com/' do %>
-          <span class='flex items-center justify-end font-light font-medium text-gray-300 text-lg ml-2 mb-6'>
+          <span class='flex items-center font-light font-medium text-gray-300 text-lg'>
             Prices powered by <%= image_tag 'https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png',
                                      size: '120x90',
                                      class: 'py-1 px-2 ml-2 rounded-md bg-gray-200' %>

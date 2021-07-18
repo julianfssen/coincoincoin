@@ -56,6 +56,17 @@ class DerivativesController < ApplicationController
     @tweets = discussions.tweets
     @users = discussions.resources.users
     @news = News.where(currency: @derivative.base).limit(5)
+    if @derivative.price > 10000
+      @precision = 7
+    elsif @derivative.price > 1000
+      @precision = 6
+    elsif @derivative.price > 100
+      @precision = 5
+    elsif @derivative.price > 10
+      @precision = 4
+    else
+      @precision = 3
+    end
   end
 
   private
