@@ -55,7 +55,7 @@ class DerivativesController < ApplicationController
     end
     @tweets = discussions.tweets
     @users = discussions.resources.users
-    @news = News.where(currency: @derivative.base).where.not(domain: 'reddit.com').limit(5)
+    @news = News.where(currency: @derivative.base).limit(5)
   end
 
   private

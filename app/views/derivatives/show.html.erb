@@ -139,11 +139,13 @@
             <%= link_to news.link, target: :_blank do %>
               <div class='flex flex-row mb-4'>
                 <div class='w-1/5 flex items-center justify-center'>
-                  <div><%= image_tag(news.preview_url, class: 'object-cover h-36 w-full rounded-md') %></div>
+                  <% if news.preview_url %>
+                    <div><%= image_tag(news.preview_url, class: 'object-cover h-36 w-full rounded-md') %></div>
+                  <% end %>
                 </div>
                 <div class='flex flex-col w-4/5 p-4'>
                   <div class='font-semibold text-lg'><%= news.title %></div>
-                  <div class='mt-1 mb-4'><%= news.summary.truncate(300) %></div>
+                  <div class='mt-1 mb-4'><%= news&.summary&.truncate(300) %></div>
                   <div class='flex flex-row'>
                     <div class='text-sm text-gray-500'><%= news.domain %></div>
                     <div class='ml-2 text-sm text-gray-500'>-</div>

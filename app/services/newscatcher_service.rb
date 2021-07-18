@@ -3,6 +3,8 @@ require 'net/http'
 require 'openssl'
 
 class NewscatcherService
+  include ERB::Util
+
   attr_accessor :client
   attr_writer :last_request_time
 
@@ -17,6 +19,7 @@ class NewscatcherService
   end
 
   def search(query)
+    query = url_encode(query)
     url = URI("https://free-news.p.rapidapi.com/v1/search?q=#{query}&lang=en")
     request = Net::HTTP::Get.new(url)
     request['x-rapidapi-key'] = Rails.application.credentials.rapidapi[:newscatcher_key]
@@ -24,8 +27,8 @@ class NewscatcherService
     current_request_time = Time.now.to_i
     difference = current_request_time - last_request_time
     if difference < 1
-      puts "Rate limit reached for Newscatcher service for query: #{query}. Sleeping for 1 seconds until next request"
-      sleep 1
+      puts "Rate limit reached for Newscatcher service for query: #{query}. Sleeping for 2 seconds until next request"
+      sleep 2
     end
     self.last_request_time = Time.now.to_i
     response = client.request(request)

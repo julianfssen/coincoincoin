@@ -5,21 +5,28 @@ class NewsImporter
     @client = NewscatcherService.new
   end
 
+  def import!
+    import_news_for_derivatives
+  end
+
   def import_news_for_derivatives
-    base_currencies = Derivative.pluck(:base).uniq
-    target_currencies = Derivative.pluck(:target).uniq
-    currencies = base_currencies.concat(target_currencies).uniq
-    currencies.each do |currency|
-      pp "Searching news for #{currency}"
-      news_for_currency = client.search(currency)['articles']
+    coins = Coin.pluck(:name, :ticker)
+    coins.each do |name, ticker|
+      next if name.match?(/\[|\]/) # newscatcherapi breaks for queries with brackets
+
+      query = name.downcase
+      puts "Searching news for: #{query}"
+      news_for_currency = client.search(query)['articles']
       next if news_for_currency.blank?
 
       news_for_currency.each do |news|
+        next if news['clean_url'].include? 'reddit'
+
         record = News.new(unique_id: news['_id'])
         next unless record.save
 
         record.update(
-          currency: currency,
+          currency: ticker.upcase,
           title: news['title'],
           domain: news['clean_url'],
           link: news['link'],
