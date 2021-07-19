@@ -1,6 +1,6 @@
 class CoinsImporter
   def initialize
-    @client = CoingeckoRuby.client
+    @client = CoingeckoRuby::Client.new
   end
 
   def import!

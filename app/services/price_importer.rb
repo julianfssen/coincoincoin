@@ -2,7 +2,7 @@ class PriceImporter
   include CoingeckoRuby
 
   def initialize
-    @client = CoingeckoRuby.client
+    @client = CoingeckoRuby::Client.new
   end
 
   def import!
@@ -17,14 +17,15 @@ class PriceImporter
   end
 
   def import_daily_historical_derivative_prices_for_market(derivative_exchange_id, market_id)
-    response = @client.get_derivative_exchange(id: market_id, options: { include_tickers: true })
+    pp market_id
+    response = @client.derivative_exchange(market_id, include_tickers: 'unexpired')
     tickers = response['tickers']
     tickers.each_slice(100) do |batch|
       batch.each do |ticker|
         begin
           puts "Symbol from CG response: #{ticker['symbol']}"
           derivative = Derivative.find_or_initialize_by(symbol: ticker['symbol'], derivative_exchange_id: derivative_exchange_id)
-          puts "Derivative: #{derivative.id}"
+          puts "Importing derivative: #{derivative.symbol}"
           derivative_daily_historical_price = DerivativeDailyHistoricalPrice.new(derivative_id: derivative.id)
           derivative_daily_historical_price.update(derivative_exchange_id: derivative_exchange_id, price: ticker['last'])
           derivative.update(

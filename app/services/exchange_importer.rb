@@ -2,12 +2,12 @@ class ExchangeImporter
   include CoingeckoRuby
 
   def initialize
-    @client = CoingeckoRuby.client
+    @client = CoingeckoRuby::Client.new
   end
 
-  def import_derivative_exchanges(options: {})
-    exchange_rate = @client.get_exchange_rate(from: 'bitcoin')['bitcoin']['usd']
-    response = @client.get_derivative_exchanges(options: options)
+  def import_derivative_exchanges(**options)
+    exchange_rate = @client.exchange_rate(from: 'bitcoin')['bitcoin']['usd']
+    response = @client.derivative_exchanges(**options)
     response.each do |r|
       exchange = DerivativeExchange.find_or_initialize_by(coingecko_exchange_id: r['id'])
       exchange.update(
