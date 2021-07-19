@@ -5,6 +5,10 @@ class PriceImporter
     @client = CoingeckoRuby.client
   end
 
+  def import!
+    import_daily_historical_derivative_prices_from_markets
+  end
+
   def import_daily_historical_derivative_prices_from_markets
     markets = DerivativeExchange.pluck(:id, :coingecko_exchange_id)
     markets.each do |derivative_exchange_id, market_id|
@@ -18,7 +22,9 @@ class PriceImporter
     tickers.each_slice(100) do |batch|
       batch.each do |ticker|
         begin
+          puts "Symbol from CG response: #{ticker['symbol']}"
           derivative = Derivative.find_or_initialize_by(symbol: ticker['symbol'], derivative_exchange_id: derivative_exchange_id)
+          puts "Derivative: #{derivative.id}"
           derivative_daily_historical_price = DerivativeDailyHistoricalPrice.new(derivative_id: derivative.id)
           derivative_daily_historical_price.update(derivative_exchange_id: derivative_exchange_id, price: ticker['last'])
           derivative.update(
