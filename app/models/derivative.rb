@@ -10,4 +10,8 @@ class Derivative < ApplicationRecord
   scope :by_symbol_desc, -> { order(symbol: :desc) }
   scope :by_price_percentage_change_24h_asc, -> { order(:price_percentage_change_24h) }
   scope :by_price_percentage_change_24h_desc, -> { order(price_percentage_change_24h: :desc) }
+
+  def to_param
+    symbol
+  end
 end

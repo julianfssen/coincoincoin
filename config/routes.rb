@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'derivatives#index'
-  resources :derivatives, only: %i[index show]
+  resources :derivative_exchanges, param: :coingecko_exchange_id do
+    resources :derivatives, only: %i[index show], param: :symbol
+  end
   resources :charts, only: %i[show]
   get 'coins', to: 'coins#index'
   get 'coins/:id', to: 'coins#show'

@@ -16,37 +16,37 @@
       <div class='flex flex-row'>
         <div class='w-1/6 flex justify-center'>
         <% if @sort.eql? 'volume_asc' %>
-          <%= link_to '# ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_desc'}), class: 'font-bold text-gray-200' %>
+          <%= link_to '# ▴', derivative_exchange_derivatives_path(derivative_exchange_id: @derivative_exchange_id, filters: { sort: 'volume_desc' }), class: 'font-bold text-gray-200' %>
         <% else %>
-          <%= link_to '# ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_asc' }), class: 'font-bold text-gray-200' %>
+          <%= link_to '# ▾', derivative_exchange_derivatives_path(derivative_exchange_id: @derivative_exchange_id, filters: { sort: 'volume_asc' }), class: 'font-bold text-gray-200' %>
         <% end %>
         </div>
         <div class='w-2/6 flex justify-start'>
         <% if @sort.eql? 'ticker_asc' %>
-          <%= link_to 'Ticker ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'ticker_desc'}), class: 'font-bold text-gray-200' %>
+          <%= link_to 'Ticker ▴', derivative_exchange_derivatives_path(derivative_exchange_id: @derivative_exchange_id, filters: { sort: 'ticker_desc' }), class: 'font-bold text-gray-200' %>
         <% else %>
-          <%= link_to 'Ticker ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'ticker_asc'}), class: 'font-bold text-gray-200' %>
+          <%= link_to 'Ticker ▾', derivative_exchange_derivatives_path(derivative_exchange_id: @derivative_exchange_id, filters: { sort: 'ticker_asc' }), class: 'font-bold text-gray-200' %>
         <% end %>
         </div>
         <div class='w-1/6 flex justify-end'>
         <% if @sort.eql? 'price_asc' %>
-          <%= link_to 'Price ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_desc'}), class: 'font-bold text-gray-200' %>
+          <%= link_to 'Price ▴', derivative_exchange_derivatives_path(derivative_exchange_id: @derivative_exchange_id, filters: { sort: 'price_desc' }), class: 'font-bold text-gray-200' %>
         <% else %>
-          <%= link_to 'Price ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_asc'}), class: 'font-bold text-gray-200' %>
+          <%= link_to 'Price ▾', derivative_exchange_derivatives_path(derivative_exchange_id: @derivative_exchange_id, filters: { sort: 'price_asc' }), class: 'font-bold text-gray-200' %>
         <% end %>
         </div>
         <div class='w-1/6 flex justify-end'>
         <% if @sort.eql? 'price_percentage_change_24h_asc' %>
-          <%= link_to '24h % ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_percentage_change_24h_desc'}), class: 'font-bold text-gray-200' %>
+          <%= link_to '24h % ▴', derivative_exchange_derivatives_path(derivative_exchange_coingecko_exchange_id: @derivative_exchange_id, filters: {  sort: 'price_percentage_change_24h_desc' }), class: 'font-bold text-gray-200' %>
         <% else %>
-          <%= link_to '24h % ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'price_percentage_change_24h_asc'}), class: 'font-bold text-gray-200' %>
+          <%= link_to '24h % ▾', derivative_exchange_derivatives_path(derivative_exchange_id: @derivative_exchange_id, filters: { sort: 'price_percentage_change_24h_asc' }), class: 'font-bold text-gray-200' %>
         <% end %>
         </div>
         <div class='w-1/6 flex justify-end'>
         <% if @sort.eql? 'volume_asc' %>
-          <%= link_to 'Volume (24h) ▴', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_desc'}), class: 'font-bold text-gray-200' %>
+          <%= link_to 'Volume (24h) ▴', derivative_exchange_derivatives_path(derivative_exchange_id: @derivative_exchange_id, filters: { sort: 'volume_desc' }), class: 'font-bold text-gray-200' %>
         <% else %>
-          <%= link_to 'Volume (24h) ▾', derivatives_path(filters: { derivative_exchange_id: @derivative_exchange_id, sort: 'volume_asc'}), class: 'font-bold text-gray-200' %>
+          <%= link_to 'Volume (24h) ▾', derivative_exchange_derivatives_path(derivative_exchange_id: @derivative_exchange_id, filters: { sort: 'volume_asc' }), class: 'font-bold text-gray-200' %>
         <% end %>
         </div>
       </div>
@@ -57,9 +57,9 @@
               <p><%= index + 1 + @page %></p>
             </div>
             <div class='w-2/6 flex items-center justify-start'>
-              <% # image_tag("https://cryptoicons.org/api/color/#{derivative.base.downcase}/32", class: 'transform scale-75', onerror: "this.style.display='none'") %>
-              <% # image_tag("https://cryptoicons.org/api/color/#{derivative.target.downcase}/32", class: 'transform scale-75', onerror: "this.style.display='none'") %>
-              <p class='ml-5 font-semibold'><%= link_to(derivative.symbol, derivative_path(id: derivative.id)) %></p>
+              <%= image_tag("coin_icons/#{derivative.base.downcase}.png", class: 'transform scale-75', onerror: "this.style.display='none'") rescue nil %>
+              <%= image_tag("coin_icons/#{derivative.target.downcase}.png", class: 'transform scale-75', onerror: "this.style.display='none'") rescue nil %>
+              <p class='ml-5 font-semibold'><%= link_to(derivative.symbol, derivative_exchange_derivative_path(derivative_exchange_id: @derivative_exchange_id, id: derivative.id)) %></p>
             </div>
             <div class='w-1/6 flex items-center justify-end'>
             <% if derivative.price < 1 %>
@@ -84,7 +84,7 @@
     </div>
     <div class='w-1/4 flex justify-center'>
       <div class='border-l border-gray-500 mr-5'></div>
-      <%= form_with url: derivatives_path, method: :get, scope: :filters, local: true, class: 'w-4/5' do |f| %>
+      <%= form_with url: derivative_exchange_derivatives_path(derivative_exchange_id: @derivative_exchange_id), method: :get, scope: :filters, local: true, class: 'w-4/5' do |f| %>
         <p class='mb-2 text-lg font-bold'>Filters</p>
         <%= f.label 'derivative-exchange-selector', 'Market', class: 'w-full' %>
         <%= f.collection_select :derivative_exchange_id, @derivative_exchanges, :id, :name, { selected: @derivative_exchange_id }, { id: 'derivative-exchange-selector', class: 'mt-2 mb-4 py-1 w-full text-gray-700 bg-gray-300 rounded', data: { controller: 'derivatives', action: 'derivatives#change' } } %>

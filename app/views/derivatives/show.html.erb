@@ -9,11 +9,11 @@
       </div>
       <div class='flex flex-row my-2'>
         <div class='flex flex-1 flex-row mr-1 items-center justify-center bg-gray-600 rounded-md'>
-          <% # image_tag("https://cryptoicons.org/api/color/#{@derivative.base.downcase}/32", class: 'transform scale-50', onerror: "this.style.display='none'") %>
+          <%= image_tag("coin_icons/#{@derivative.base.downcase}.png", class: 'transform scale-75', onerror: "this.style.display='none'") rescue nil %>
           <span class='font-semibold'><%= @derivative.base %></span>
         </div>
         <div class='flex flex-1 flex-row ml-1 items-center justify-center bg-gray-600 rounded-md'>
-          <% # image_tag("https://cryptoicons.org/api/color/#{@derivative.target.downcase}/32", class: 'transform scale-50', onerror: "this.style.display='none'") %>
+          <%= image_tag("coin_icons/#{@derivative.target.downcase}.png", class: 'transform scale-75', onerror: "this.style.display='none'") rescue nil %>
           <span class='font-semibold'><%= @derivative.target %></span>
         </div>
       </div>

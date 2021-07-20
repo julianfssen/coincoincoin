@@ -12,6 +12,7 @@ class DerivativesController < ApplicationController
     @target_currencies = TARGET_CURRENCIES
     if params[:filters]
       @derivative_exchange_id = filter_params[:derivative_exchange_id] || 1
+      # @coingecko_exchange_id
       @contract_type = filter_params[:contract_type] || 'Any'
       @sort = filter_params[:sort]
       @base_currency = filter_params[:base_currency] || 'Any'
