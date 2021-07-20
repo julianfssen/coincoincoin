@@ -167,6 +167,7 @@ GEM
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (1.0.1)
+    memory_profiler (1.0.0)
     method_source (1.0.0)
     mini_mime (1.1.0)
     mini_portile2 (2.5.3)
@@ -191,6 +192,8 @@ GEM
     raabro (1.4.0)
     racc (1.5.2)
     rack (2.2.3)
+    rack-mini-profiler (2.3.2)
+      rack (>= 1.2.0)
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -270,6 +273,7 @@ GEM
     sshkit (1.21.2)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    stackprof (0.2.17)
     stimulus-rails (0.2.3)
       rails (>= 6.0.0)
     thor (1.1.0)
@@ -316,10 +320,12 @@ DEPENDENCIES
   coingecko_ruby
   jbuilder (~> 2.7)
   listen (~> 3.2)
+  memory_profiler
   pagy (~> 3.5)
   pg (>= 0.18, < 2.0)
   pry (~> 0.13.1)
   puma (~> 4.1)
+  rack-mini-profiler
   rails (>= 6.0.3, < 7.0)
   redis (~> 4.0)
   sass-rails (>= 6)
@@ -328,6 +334,7 @@ DEPENDENCIES
   sidekiq-scheduler
   spring
   spring-watcher-listen (~> 2.0.0)
+  stackprof
   stimulus-rails
   turbo-rails
   tweetkit!

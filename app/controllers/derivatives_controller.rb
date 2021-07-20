@@ -6,40 +6,41 @@ class DerivativesController < ApplicationController
   TARGET_CURRENCIES = %w[Any BTC BTCF0 BUSD DAI DKKT JPY USD USD-R USDC USDT XBT].freeze
 
   def index
-    @derivative_exchanges = DerivativeExchange.all.order(:name)
+    @derivative_exchanges = DerivativeExchange.pluck(:name).sort
     @contract_types = CONTRACT_TYPES
     @base_currencies = BASE_CURRENCIES
     @target_currencies = TARGET_CURRENCIES
     if params[:filters]
-      @derivative_exchange_id = filter_params[:derivative_exchange_id] || 1
-      # @coingecko_exchange_id
-      @contract_type = filter_params[:contract_type] || 'Any'
-      @sort = filter_params[:sort]
+      @selected_exchange = filter_params[:selected_exchange] || 'Binance (Futures)'
       @base_currency = filter_params[:base_currency] || 'Any'
       @target_currency = filter_params[:target_currency] || 'Any'
+      @contract_type = filter_params[:contract_type] || 'Any'
+      @sort = filter_params[:sort]
     else
+      @selected_exchange = 'Binance (Futures)'
       @base_currency = 'Any'
       @target_currency = 'Any'
-      @derivative_exchange_id = 1
       @contract_type = 'Any'
     end
+    @exchange = DerivativeExchange.find_by(name: @selected_exchange)
+    @coingecko_exchange_id = @exchange.coingecko_exchange_id
     case @sort
     when 'volume_asc'
-      @pagy, @derivatives = pagy(Derivative.where(derivative_exchange_id: @derivative_exchange_id).by_volume_24h_asc)
+      @pagy, @derivatives = pagy(@exchange.derivatives.by_volume_24h_asc)
     when 'price_asc'
-      @pagy, @derivatives = pagy(Derivative.where(derivative_exchange_id: @derivative_exchange_id).by_price_asc)
+      @pagy, @derivatives = pagy(@exchange.derivatives.by_price_asc)
     when 'price_desc'
-      @pagy, @derivatives = pagy(Derivative.where(derivative_exchange_id: @derivative_exchange_id).by_price_desc)
+      @pagy, @derivatives = pagy(@exchange.derivatives.by_price_desc)
     when 'ticker_asc'
-      @pagy, @derivatives = pagy(Derivative.where(derivative_exchange_id: @derivative_exchange_id).by_symbol_asc)
+      @pagy, @derivatives = pagy(@exchange.derivatives.by_symbol_asc)
     when 'ticker_desc'
-      @pagy, @derivatives = pagy(Derivative.where(derivative_exchange_id: @derivative_exchange_id).by_symbol_desc)
+      @pagy, @derivatives = pagy(@exchange.derivatives.by_symbol_desc)
     when 'price_percentage_change_24h_asc'
-      @pagy, @derivatives = pagy(Derivative.where(derivative_exchange_id: @derivative_exchange_id).by_price_percentage_change_24h_asc)
+      @pagy, @derivatives = pagy(@exchange.derivatives.by_price_percentage_change_24h_asc)
     when 'price_percentage_change_24h_desc'
-      @pagy, @derivatives = pagy(Derivative.where(derivative_exchange_id: @derivative_exchange_id).by_price_percentage_change_24h_desc)
+      @pagy, @derivatives = pagy(@exchange.derivatives.by_price_percentage_change_24h_desc)
     else
-      @pagy, @derivatives = pagy(Derivative.where(derivative_exchange_id: @derivative_exchange_id).by_volume_24h_desc)
+      @pagy, @derivatives = pagy(@exchange.derivatives.by_volume_24h_desc)
     end
     @pagy, @derivatives = pagy(@derivatives.where(contract_type: @contract_type.downcase)) unless @contract_type.eql? 'Any'
     @pagy, @derivatives = pagy(@derivatives.where(base: @base_currency)) unless @base_currency.eql? 'Any'
@@ -48,9 +49,9 @@ class DerivativesController < ApplicationController
   end
 
   def show
-    @derivative = Derivative.find(params[:id])
-    @derivative_exchange = DerivativeExchange.find(@derivative.derivative_exchange_id)
-    symbol = @derivative.symbol
+    symbol = params[:symbol]
+    @derivative = Derivative.find_by(symbol: symbol)
+    @derivative_exchange = DerivativeExchange.find_by(coingecko_exchange_id: params[:derivative_exchange_coingecko_exchange_id])
     discussions = Rails.cache.fetch("#{symbol} tweets", expires_in: 5.minutes) do
       TweetkitService.new.search_tweets(symbol, user_fields: ['username', 'profile_image_url'], expansions: ['author_id'])
     end
@@ -73,6 +74,6 @@ class DerivativesController < ApplicationController
   private
 
   def filter_params
-    params.require(:filters).permit(:sort, :derivative_exchange_id, :contract_type, :base_currency, :target_currency)
+    params.require(:filters).permit(:sort, :coingecko_exchange_id, :contract_type, :base_currency, :target_currency, :selected_exchange)
   end
 end
