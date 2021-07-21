@@ -7,7 +7,7 @@ class NewsImporter
     end
 
     def import_news_for_derivatives
-      coins = Coin.pluck(:name, :ticker)
+      # coins = Coin.pluck(:name, :ticker)
       COINS_TO_SEARCH.each do |coin|
         query = coin.downcase
         puts "Searching news for: #{query}"
@@ -15,18 +15,16 @@ class NewsImporter
         next if news_for_currency.blank?
 
         news_for_currency.each do |news|
-          record = News.new(unique_id: news['_id'])
-          next unless record.save
-
-          record.update(
-            currency: ticker.upcase,
+          record = News.new(
+            currency: news['tickers'].first,
             title: news['title'],
-            domain: news['clean_url'],
-            link: news['link'],
-            summary: news['summary'],
-            preview_url: news['media'],
-            published_date: news['published_date']
+            domain: news['source_name'],
+            link: news['news_url'],
+            summary: news['text'],
+            preview_url: news['image_url'],
+            published_date: news['date']
           )
+          record.save
         rescue StandardError => e
           puts "Error saving record: #{e}"
           next
