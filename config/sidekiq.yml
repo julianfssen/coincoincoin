@@ -3,5 +3,5 @@
     cron: '0 8 * * *'
     class: DownloadDerivativePriceDataJob
   import_crypto_news:
-    cron: '0 10 * * *'
+    cron: '0 9 * * *'
     class: ImportCryptoNewsJob
