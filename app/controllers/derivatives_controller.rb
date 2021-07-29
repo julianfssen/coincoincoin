@@ -53,7 +53,9 @@ class DerivativesController < ApplicationController
     @derivative = Derivative.find_by(symbol: symbol)
     @derivative_exchange = DerivativeExchange.find_by(coingecko_exchange_id: params[:derivative_exchange_coingecko_exchange_id])
     discussions = Rails.cache.fetch("#{symbol} tweets", expires_in: 5.minutes) do
-      TweetkitService.new.search_tweets(symbol, user_fields: ['username', 'profile_image_url'], expansions: ['author_id'])
+      TweetkitService.new.search_tweets(symbol, user_fields: ['username', 'profile_image_url'], expansions: ['author_id']) do
+        is_not :retweet
+      end
     end
     @tweets = discussions.tweets
     @users = discussions.resources.users
